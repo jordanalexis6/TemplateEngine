@@ -10,10 +10,36 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-
+const questions = [
+	{
+		type: "input",
+		message: "Employee Name:",
+		name: "employeeName",
+	},
+	{
+		//not sure how to make this a checkbox, but would like this to direct the app to use the appropriate card generation.
+		type: "checkbox",
+		message: "Job Title:",
+		name: "jobTitle",
+	},
+	{
+		type: "input",
+		message: "Employee ID:",
+		name: "employeeID",
+	},
+	{
+		type: "input",
+		message: "Email:",
+		name: "email",
+	},
+	{
+		type: "input",
+		message: "GitHub link:",
+		name: "gitHubLink",
+	},
+];
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
