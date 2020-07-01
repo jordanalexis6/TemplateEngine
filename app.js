@@ -153,15 +153,17 @@ function add() {
 							add();
 						});
 						break;
-					
+
 					default:
-					
-			let htmlOutput = render(employeeData);
-			// make fs.writeFile call to render an html output
-			fs.writeFile(outputPath, htmlOutput, function (err) {
-				if (err) {
-					return console.log(err);
+						let htmlOutput = render(employeeData);
+						// make fs.writeFile call to render an html output
+						fs.writeFile(outputPath, htmlOutput, function (err) {
+							if (err) {
+								return console.log(err);
+							}
+						});
 				}
 			});
 		}
-	})
+	});
+}
