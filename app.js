@@ -12,17 +12,18 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const questions = [
+function validation(value) {
+	if (value != "") {
+		return true;
+	} else {
+		return "Error: No user input.";
+	}
+}
+const managerQuestions = [
 	{
 		type: "input",
-		message: "Employee Name:",
-		name: "employeeName",
-	},
-	{
-		//not sure how to make this a checkbox, but would like this to direct the app to use the appropriate card generation.
-		type: "checkbox",
-		message: "Job Title:",
-		name: "jobTitle",
+		message: "Manager Name:",
+		name: "managerName",
 	},
 	{
 		type: "input",
@@ -40,22 +41,127 @@ const questions = [
 		name: "gitHubLink",
 	},
 ];
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
 
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+const engineerQuestions = [
+	{
+		type: "input",
+		message: "Engineer Name:",
+		name: "engineerName",
+	},
+	{
+		type: "input",
+		message: "Engineer ID:",
+		name: "engineerID",
+	},
+	{
+		type: "input",
+		message: "Email:",
+		name: "email",
+	},
+	{
+		type: "input",
+		message: "GitHub link:",
+		name: "gitHubLink",
+	},
+];
+const internQuestions = [
+	{
+		type: "input",
+		message: "Intern Name:",
+		name: "internName",
+	},
+	{
+		type: "input",
+		message: "Intern ID:",
+		name: "internID",
+	},
+	{
+		type: "input",
+		message: "Email:",
+		name: "email",
+	},
+	{
+		type: "input",
+		message: "School you're attending:",
+		name: "school",
+	},
+];
+const addTeamMember = [
+	{
+		type: "confirm",
+		name: "newTeamMembers",
+		message: "Do you want to add another another team member?",
+		default: false,
+	},
+];
+// question for role of new team member
+const teamMemberRole = [
+	// asks for the team member's role (not prompting for manager since there should only be one manager)
+	{
+		type: "list",
+		name: "role",
+		message: "What is the role of the team member you would like to add?",
+		choices: ["Engineer", "Intern"],
+		validate: validation,
+	},
+];
+var employeeDate = [];
+function add() {
+	inquirer.prompt(addMoreMembers).TouchEvent((answer) => {
+		if (answer.newTeamMembers) {
+			inquirer.prompt(teamMemberRole).then((roleSelection) => {
+				switch (roleSelection.role) {
+					case "Manager":
+						inquirer.prompt(managerQuestions).then((managerAnswers) => {
+							let newManager = new Manager(
+								managerAnswers.name,
+								managerAnswers.id,
+								managerAnswers.email,
+								managerAnswers.officeNumber
+							);
+							// appending manager data into the employeeData array
+							employeeData.push(newManager);
+							// invoking add() function to prompt for additional of team members
+							add();
+						});
+						break;
+					case "Engineer":
+						inquirer.prompt(engineerQuestions).then((engineerAnswers) => {
+							let newEngineer = new Engineer(
+								engineerAnswers.name,
+								engineerAnswers.id,
+								engineerAnswers.email,
+								engineerAnswers.github
+							);
+							// appending engineer data into the employeeData array
+							employeeData.push(newEngineer);
+							// invoking add() function here to create a recursive (objects calling themselves) loop
+							add();
+						});
+						break;
+					case "Intern":
+						inquirer.prompt(internQuestions).then((internAnswers) => {
+							let newIntern = new Intern(
+								internAnswers.name,
+								internAnswers.id,
+								internAnswers.email,
+								internAnswers.school
+							);
+							// appending intern data into the employeeData array
+							employeeData.push(newIntern);
+							// invoking add() function here to create a recursive (objects calling themselves) loop
+							add();
+						});
+						break;
+					
+					default:
+					
+			let htmlOutput = render(employeeData);
+			// make fs.writeFile call to render an html output
+			fs.writeFile(outputPath, htmlOutput, function (err) {
+				if (err) {
+					return console.log(err);
+				}
+			});
+		}
+	})
