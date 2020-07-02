@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Employee = require("./lib/Employee");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -22,7 +23,7 @@ function validation(value) {
 const employeeQuestions = [
 	{
 		type: "input",
-		message: "Name:",
+		message: "Employee name:",
 		name: "name",
 	},
 	{
@@ -32,7 +33,7 @@ const employeeQuestions = [
 	},
 	{
 		type: "input",
-		message: "Email:",
+		message: "Employee Email:",
 		name: "email",
 	},
 ];
@@ -77,6 +78,10 @@ const teamMemberRole = [
 		validate: validation,
 	},
 ];
+engineerQuestions.push(...employeeQuestions);
+internQuestions.push(...employeeQuestions);
+managerQuestions.push(...employeeQuestions);
+
 var employeeData = [];
 function add() {
 	inquirer.prompt(addMoreMembers).then((answer) => {
