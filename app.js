@@ -9,6 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Employee = require("./lib/Employee");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -19,78 +20,50 @@ function validation(value) {
 		return "Error: No user input.";
 	}
 }
-const managerQuestions = [
+const employeeQuestions = [
 	{
 		type: "input",
-		message: "Manager Name:",
-		name: "managerName",
+		message: "Employee name:",
+		name: "name",
 	},
 	{
 		type: "input",
 		message: "Employee ID:",
-		name: "employeeID",
+		name: "id",
 	},
 	{
 		type: "input",
-		message: "Email:",
+		message: "Employee Email:",
 		name: "email",
 	},
+];
+const managerQuestions = [
 	{
 		type: "input",
-		message: "GitHub link:",
-		name: "gitHubLink",
+		message: "Office Number:",
+		name: "officeNumber",
 	},
 ];
 
 const engineerQuestions = [
 	{
 		type: "input",
-		message: "Engineer Name:",
-		name: "engineerName",
-	},
-	{
-		type: "input",
-		message: "Engineer ID:",
-		name: "engineerID",
-	},
-	{
-		type: "input",
-		message: "Email:",
-		name: "email",
-	},
-	{
-		type: "input",
 		message: "GitHub link:",
-		name: "gitHubLink",
+		name: "gitHub",
 	},
 ];
 const internQuestions = [
-	{
-		type: "input",
-		message: "Intern Name:",
-		name: "internName",
-	},
-	{
-		type: "input",
-		message: "Intern ID:",
-		name: "internID",
-	},
-	{
-		type: "input",
-		message: "Email:",
-		name: "email",
-	},
 	{
 		type: "input",
 		message: "School you're attending:",
 		name: "school",
 	},
 ];
-const addTeamMember = [
+const addMoreMembers = [
 	{
 		type: "confirm",
 		name: "newTeamMembers",
-		message: "Do you want to add another another team member?",
+		message: "Add team member?",
 		default: false,
 	},
 ];
@@ -100,14 +73,18 @@ const teamMemberRole = [
 	{
 		type: "list",
 		name: "role",
-		message: "What is the role of the team member you would like to add?",
-		choices: ["Engineer", "Intern"],
+		message: "Team member role:",
+		choices: ["Engineer", "Intern", "Manager"],
 		validate: validation,
 	},
 ];
-var employeeDate = [];
+engineerQuestions.push(...employeeQuestions);
+internQuestions.push(...employeeQuestions);
+managerQuestions.push(...employeeQuestions);
+
+var employeeData = [];
 function add() {
-	inquirer.prompt(addMoreMembers).TouchEvent((answer) => {
+	inquirer.prompt(addMoreMembers).then((answer) => {
 		if (answer.newTeamMembers) {
 			inquirer.prompt(teamMemberRole).then((roleSelection) => {
 				switch (roleSelection.role) {
@@ -131,7 +108,7 @@ function add() {
 								engineerAnswers.name,
 								engineerAnswers.id,
 								engineerAnswers.email,
-								engineerAnswers.github
+								engineerAnswers.gitHub
 							);
 							// appending engineer data into the employeeData array
 							employeeData.push(newEngineer);
@@ -167,3 +144,4 @@ function add() {
 		}
 	});
 }
+add();
