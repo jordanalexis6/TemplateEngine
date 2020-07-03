@@ -16,6 +16,7 @@ Node is used to run through questions arrays. Those answers are used by being in
 - Tests
 - Questions
 - Project Video
+- Project Gif
 - GitHub Email
 
 ## Installation Instructions:
@@ -41,7 +42,11 @@ Four questions arrays are used:
 
 ## Project Video:
 
-![weather dashboard demo](./Assets/TeamCLIGen.mp4)
+https://drive.google.com/file/d/1WEKjLMx_TYELfzVheBmLsmdnmeCngAgm/view?usp=sharing
+
+## Project Gif
+
+![Template Engine demo](./Assets/TeamCLIGenGif.gif)
 
 GitHub Emails:
 juanlajara001@gmail.com, jordanalexis6@something.com, kholder777@yahoo.com
