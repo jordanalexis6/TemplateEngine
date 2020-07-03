@@ -9,7 +9,6 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const Employee = require("./lib/Employee");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -132,13 +131,14 @@ function add() {
 						break;
 
 					default:
-						let htmlOutput = render(employeeData);
-						// make fs.writeFile call to render an html output
-						fs.writeFile(outputPath, htmlOutput, function (err) {
-							if (err) {
-								return console.log(err);
-							}
-						});
+				}
+			});
+		} else {
+			let htmlOutput = render(employeeData);
+			// make fs.writeFile call to render an html output
+			fs.writeFile(outputPath, htmlOutput, function (err) {
+				if (err) {
+					return console.log(err);
 				}
 			});
 		}
