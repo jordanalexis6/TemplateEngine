@@ -49,4 +49,4 @@ https://drive.google.com/file/d/1WEKjLMx_TYELfzVheBmLsmdnmeCngAgm/view?usp=shari
 ![Template Engine demo](./Assets/TeamCLIGenGif.gif)
 
 GitHub Emails:
-juanlajara001@gmail.com, jordanalexis6@something.com, kholder777@yahoo.com
+Juanlajara001@gmail.com, Jordan.a.neill@gmail.com, Kholder777@yahoo.com
